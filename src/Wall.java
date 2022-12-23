@@ -5,8 +5,7 @@ import java.util.List;
 public class Wall extends GameObject implements DrawableObject {
 
     List<Point> positions = new ArrayList<>();
-
-    public Wall(int startX, int startY, int length, Direction direction) {
+    public Wall(Maze maze, int startX, int startY, int length, Direction direction) {
 
         int x = startX;
         int y = startY;
@@ -25,6 +24,8 @@ public class Wall extends GameObject implements DrawableObject {
             x = x + xfactor;
             y = y + yfactor;
         }
+
+        maze.addWall(this.positions);
 
     }
 

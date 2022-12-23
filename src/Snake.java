@@ -65,18 +65,7 @@ public class Snake extends GameObject implements MovableObject, DrawableObject {
     }
 
 
-    public boolean checkForCollision() {
 
-        for (int i = 1; i < body.size(); i++) {
-
-            if (body.get(0).position.equals(body.get(i).position)) {
-                return true;
-            }
-
-        }
-
-        return false;
-    }
 
     @Override
     public void draw(Graphics g) {

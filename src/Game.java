@@ -13,8 +13,8 @@ public class Game {
 
     Maze maze;
 
-    public static final int GAME_WIDTH = 100;
-    public static final int GAME_HEIGHT = 80;
+    public static final int GAME_WIDTH = 80;
+    public static final int GAME_HEIGHT = 60;
     public static final int ELEMENT_SIZE = 5;
 
     public Game() throws InterruptedException {
@@ -39,13 +39,15 @@ public class Game {
 
     private void startGame() throws InterruptedException {
 
-        snake = new Snake(new Point(4, 4), 20);
+        maze = new Maze();
+
+        snake = new Snake(new Point(5, 5), 4);
 
         gamePanel.addDrawableObject(snake);
-        gamePanel.addDrawableObject(new Wall(0, 0, GAME_HEIGHT, Direction.DOWN));
-        gamePanel.addDrawableObject(new Wall(0, 0, GAME_WIDTH, Direction.RIGHT));
-        gamePanel.addDrawableObject(new Wall(GAME_WIDTH-1, 0, GAME_HEIGHT, Direction.DOWN));
-        gamePanel.addDrawableObject(new Wall(0, GAME_HEIGHT-1, GAME_WIDTH, Direction.RIGHT));
+        gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_HEIGHT, Direction.DOWN));
+        gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_WIDTH, Direction.RIGHT));
+        gamePanel.addDrawableObject(new Wall(maze, GAME_WIDTH-1, 0, GAME_HEIGHT, Direction.DOWN));
+        gamePanel.addDrawableObject(new Wall(maze, 0, GAME_HEIGHT-1, GAME_WIDTH, Direction.RIGHT));
 
         while (true) {
 
@@ -54,6 +56,9 @@ public class Game {
             snake.setDirection(inputMonitor.getNextDirection());
             snake.move();
             if (Collisions.checkForCollision(snake.getSinglePosition(), snake)) {
+                System.exit(1);
+            }
+            if (Collisions.checkForCollision(snake.getSinglePosition(), maze)) {
                 System.exit(1);
             }
             gamePanel.repaint();

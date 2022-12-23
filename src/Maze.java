@@ -10,4 +10,10 @@ public class Maze extends GameObject {
         walls.addAll(wall);
     }
 
+    @Override
+    public List<Point> getPositionsList() {
+
+        return walls;
+    }
+
 }
