@@ -11,11 +11,8 @@ public class Snake extends GameObject implements MovableObject, DrawableObject {
     private Direction currentDirection = Direction.SOUTH;
 
     public Snake(Point startingPosition, int size) {
-
         body.add(new BodyElement(null, startingPosition));
-
         grow(size);
-
     }
 
     public Direction getCurrentDirection() {

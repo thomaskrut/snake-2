@@ -21,7 +21,7 @@ public class Game {
 
     public static final int GAME_WIDTH = 80;
     public static final int GAME_HEIGHT = 60;
-    public static final int ELEMENT_SIZE = 10;
+    public static final int ELEMENT_SIZE = 8;
 
     public Game() throws InterruptedException {
 
@@ -67,7 +67,7 @@ public class Game {
 
         while (true) {
 
-            Thread.sleep(80);
+            Thread.sleep(50);
 
             food.generateNewFood(maze);
 
@@ -87,16 +87,20 @@ public class Game {
 
     private void checkCollisions() {
 
-        if (Collisions.checkForCollision(snake.getSinglePosition(), snake)) {
-            System.exit(1);
+        for (MovableObject o : movableObjects) {
+            if (Collisions.checkForCollision(o.getSinglePosition(), snake)) {
+                System.exit(1);
+            }
+            if (Collisions.checkForCollision(o.getSinglePosition(), maze)) {
+                System.exit(2);
+            }
+            if (Collisions.checkForCollision(o.getSinglePosition(), food)) {
+                food.eatFood(o.getSinglePosition());
+                o.grow(5);
+            }
         }
-        if (Collisions.checkForCollision(snake.getSinglePosition(), maze)) {
-            System.exit(2);
-        }
-        if (Collisions.checkForCollision(snake.getSinglePosition(), food)) {
-            food.eatFood(snake.getSinglePosition());
-            snake.grow(5);
-        }
+
+
     }
 
 }

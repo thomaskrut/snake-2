@@ -16,7 +16,7 @@ public class Maze extends GameObject {
         return walls;
     }
 
-    public synchronized int hasObstacleAlongAxis(int x, int y, Direction direction) {
+    public int hasObstacleAlongAxis(int x, int y, Direction direction) {
 
         int result = 999;
 
