@@ -8,7 +8,7 @@ public class Snake extends GameObject implements MovableObject, DrawableObject {
 
     int elementsToGrow;
 
-    private Direction direction = Direction.DOWN;
+    private Direction currentDirection = Direction.SOUTH;
 
     public Snake(Point startingPosition, int size) {
 
@@ -16,6 +16,10 @@ public class Snake extends GameObject implements MovableObject, DrawableObject {
 
         grow(size);
 
+    }
+
+    public Direction getCurrentDirection() {
+        return currentDirection;
     }
 
     @Override
@@ -38,9 +42,25 @@ public class Snake extends GameObject implements MovableObject, DrawableObject {
     }
 
 
-    public void setDirection(Direction direction) {
-        if (direction != null) {
-            this.direction = direction;
+    public void setDirection(Direction newDirection) {
+        if (newDirection != null) {
+
+            switch (newDirection){
+                case NORTH -> {
+                    if (!currentDirection.equals(Direction.SOUTH)) currentDirection = newDirection;
+                }
+                case SOUTH -> {
+                    if (!currentDirection.equals(Direction.NORTH)) currentDirection = newDirection;
+                }
+                case WEST -> {
+                    if (!currentDirection.equals(Direction.EAST)) currentDirection = newDirection;
+                }
+                case EAST -> {
+                    if (!currentDirection.equals(Direction.WEST)) currentDirection = newDirection;
+                }
+            }
+
+
         }
 
     }
@@ -54,7 +74,7 @@ public class Snake extends GameObject implements MovableObject, DrawableObject {
     public void move() {
 
         for (BodyElement b : body) {
-            b.moveElement(direction);
+            b.moveElement(currentDirection);
         }
 
         if (elementsToGrow > 0) {
@@ -97,10 +117,10 @@ class BodyElement {
         if (this.nextElement == null) {
             previousPosition.setLocation(position);
             switch (direction) {
-                case UP -> position.y--;
-                case DOWN -> position.y++;
-                case LEFT -> position.x--;
-                case RIGHT -> position.x++;
+                case NORTH -> position.y--;
+                case SOUTH -> position.y++;
+                case WEST -> position.x--;
+                case EAST -> position.x++;
             }
         } else {
             previousPosition.setLocation(position);

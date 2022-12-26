@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
@@ -11,13 +13,11 @@ public class Game {
 
     Snake snake;
 
-    Snake snake2;
-
     Maze maze;
 
     Food food;
 
-    AI Ai;
+    List<MovableObject> movableObjects;
 
     public static final int GAME_WIDTH = 80;
     public static final int GAME_HEIGHT = 60;
@@ -51,29 +51,31 @@ public class Game {
 
         snake = new Snake(new Point(5, 5), 14);
 
-        snake2 = new Snake(new Point(25, 25), 14);
+        movableObjects = new ArrayList<>();
 
-        Ai = new AI(snake2, maze, food);
+        movableObjects.add(snake);
 
         gamePanel.addDrawableObject(snake);
-        gamePanel.addDrawableObject(snake2);
         gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_HEIGHT, Alignment.VERTICAL));
         gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_WIDTH, Alignment.HORIZONTAL));
         gamePanel.addDrawableObject(new Wall(maze, GAME_WIDTH-1, 0, GAME_HEIGHT, Alignment.VERTICAL));
         gamePanel.addDrawableObject(new Wall(maze, 0, GAME_HEIGHT-1, GAME_WIDTH, Alignment.HORIZONTAL));
+
+        gamePanel.addDrawableObject(new Wall(maze, 50,20, 40, Alignment.VERTICAL));
+
         gamePanel.addDrawableObject(food);
 
         while (true) {
 
-            Thread.sleep(50);
+            Thread.sleep(80);
 
             food.generateNewFood(maze);
 
             snake.setDirection(keyInput.getNextDirection());
 
-            snake.move();
-
-            snake2.move();
+            for (MovableObject o : movableObjects) {
+                o.move();
+            }
 
             checkCollisions();
 
@@ -81,10 +83,10 @@ public class Game {
 
         }
 
-
     }
 
     private void checkCollisions() {
+
         if (Collisions.checkForCollision(snake.getSinglePosition(), snake)) {
             System.exit(1);
         }

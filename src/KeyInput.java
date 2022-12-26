@@ -28,10 +28,10 @@ public class KeyInput implements KeyListener {
 
         switch (e.getKeyCode()) {
             case (KeyEvent.VK_ESCAPE) -> System.exit(0);
-            case (KeyEvent.VK_UP) -> directionQueue.add(Direction.UP);
-            case (KeyEvent.VK_DOWN) -> directionQueue.add(Direction.DOWN);
-            case (KeyEvent.VK_LEFT) -> directionQueue.add(Direction.LEFT);
-            case (KeyEvent.VK_RIGHT) -> directionQueue.add(Direction.RIGHT);
+            case (KeyEvent.VK_UP) -> directionQueue.add(Direction.NORTH);
+            case (KeyEvent.VK_DOWN) -> directionQueue.add(Direction.SOUTH);
+            case (KeyEvent.VK_LEFT) -> directionQueue.add(Direction.WEST);
+            case (KeyEvent.VK_RIGHT) -> directionQueue.add(Direction.EAST);
         }
 
     }

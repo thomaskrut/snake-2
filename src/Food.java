@@ -53,8 +53,13 @@ public class Food extends GameObject implements DrawableObject {
     }
 
     @Override
-    public Point getSinglePosition() {
-        return null;
+    public synchronized Point getSinglePosition() {
+        if (!foodList.isEmpty()) {
+            return foodList.get(0);
+        } else {
+            return null;
+        }
+
     }
 
     @Override
