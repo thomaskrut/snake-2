@@ -3,7 +3,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InputMonitor implements KeyListener {
+public class KeyInput implements KeyListener {
 
 
 
