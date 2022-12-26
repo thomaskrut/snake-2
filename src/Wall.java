@@ -5,18 +5,31 @@ import java.util.List;
 public class Wall extends GameObject implements DrawableObject {
 
     List<Point> positions = new ArrayList<>();
-    public Wall(Maze maze, int startX, int startY, int length, Direction direction) {
 
+    int startX;
+    int startY;
+    int width;
+    int height;
+    public Wall(Maze maze, int startX, int startY, int length, Alignment alignment) {
+
+        this.startX = startX * Game.ELEMENT_SIZE;
+        this.startY = startY * Game.ELEMENT_SIZE;
         int x = startX;
         int y = startY;
         int xfactor = 0;
         int yfactor = 0;
 
-        switch (direction) {
-            case UP -> yfactor = -1;
-            case DOWN -> yfactor = 1;
-            case LEFT -> xfactor = -1;
-            case RIGHT -> xfactor = 1;
+        switch (alignment) {
+            case VERTICAL -> {
+                yfactor = 1;
+                height = length * Game.ELEMENT_SIZE;
+                width = Game.ELEMENT_SIZE;
+            }
+            case HORIZONTAL -> {
+                xfactor = 1;
+                width = length * Game.ELEMENT_SIZE;
+                height = Game.ELEMENT_SIZE;
+            }
         }
 
         for (int i = 0; i < length; i++) {
@@ -32,9 +45,6 @@ public class Wall extends GameObject implements DrawableObject {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.gray);
-        for (Point p : positions) {
-            g.fillRect(p.x*Game.ELEMENT_SIZE, p.y*Game.ELEMENT_SIZE, Game.ELEMENT_SIZE, Game.ELEMENT_SIZE);
-        }
-
+        g.fillRect(startX, startY, width, height);
     }
 }

@@ -15,7 +15,7 @@ public class Game {
 
     public static final int GAME_WIDTH = 80;
     public static final int GAME_HEIGHT = 60;
-    public static final int ELEMENT_SIZE = 5;
+    public static final int ELEMENT_SIZE = 10;
 
     public Game() throws InterruptedException {
 
@@ -41,13 +41,13 @@ public class Game {
 
         maze = new Maze();
 
-        snake = new Snake(new Point(5, 5), 4);
+        snake = new Snake(new Point(5, 5), 14);
 
         gamePanel.addDrawableObject(snake);
-        gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_HEIGHT, Direction.DOWN));
-        gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_WIDTH, Direction.RIGHT));
-        gamePanel.addDrawableObject(new Wall(maze, GAME_WIDTH-1, 0, GAME_HEIGHT, Direction.DOWN));
-        gamePanel.addDrawableObject(new Wall(maze, 0, GAME_HEIGHT-1, GAME_WIDTH, Direction.RIGHT));
+        gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_HEIGHT, Alignment.VERTICAL));
+        gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_WIDTH, Alignment.HORIZONTAL));
+        gamePanel.addDrawableObject(new Wall(maze, GAME_WIDTH-1, 0, GAME_HEIGHT, Alignment.VERTICAL));
+        gamePanel.addDrawableObject(new Wall(maze, 0, GAME_HEIGHT-1, GAME_WIDTH, Alignment.HORIZONTAL));
 
         while (true) {
 
@@ -59,7 +59,7 @@ public class Game {
                 System.exit(1);
             }
             if (Collisions.checkForCollision(snake.getSinglePosition(), maze)) {
-                System.exit(1);
+                System.exit(2);
             }
             gamePanel.repaint();
 
