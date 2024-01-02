@@ -1,23 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Game implements ActionListener {
 
     JFrame f = new JFrame();
-
     KeyInput keyInput;
-
     GamePanel gamePanel;
-
     Snake snake;
-
     Maze maze;
-
     Food food;
 
     List<MovableObject> movableObjects;
+
+    Timer timer = new Timer(50, this);
 
     public static final int GAME_WIDTH = 80;
     public static final int GAME_HEIGHT = 60;
@@ -47,42 +46,45 @@ public class Game {
 
         maze = new Maze();
 
+        buildMaze(maze, gamePanel);
+
         food = new Food(maze);
 
         snake = new Snake(new Point(5, 5), 14);
 
-        movableObjects = new ArrayList<>();
-
-        movableObjects.add(snake);
+        movableObjects = List.of(snake);
 
         gamePanel.addDrawableObject(snake);
+
+        gamePanel.addDrawableObject(food);
+
+        timer.start();
+
+    }
+
+    private void update() {
+        food.generateNewFood(maze);
+
+        snake.setDirection(keyInput.getNextDirection());
+
+        movableObjects.forEach(MovableObject::move);
+
+        checkCollisions();
+
+        gamePanel.repaint();
+    }
+
+    private void buildMaze(Maze maze, GamePanel gamePanel) {
+
+
         gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_HEIGHT, Alignment.VERTICAL));
         gamePanel.addDrawableObject(new Wall(maze, 0, 0, GAME_WIDTH, Alignment.HORIZONTAL));
         gamePanel.addDrawableObject(new Wall(maze, GAME_WIDTH-1, 0, GAME_HEIGHT, Alignment.VERTICAL));
         gamePanel.addDrawableObject(new Wall(maze, 0, GAME_HEIGHT-1, GAME_WIDTH, Alignment.HORIZONTAL));
 
-        gamePanel.addDrawableObject(new Wall(maze, 50,20, 40, Alignment.VERTICAL));
-
-        gamePanel.addDrawableObject(food);
-
-        while (true) {
-
-            Thread.sleep(50);
-
-            food.generateNewFood(maze);
-
-            snake.setDirection(keyInput.getNextDirection());
-
-            for (MovableObject o : movableObjects) {
-                o.move();
-            }
-
-            checkCollisions();
-
-            gamePanel.repaint();
-
-        }
-
+        gamePanel.addDrawableObject(new Wall(maze, 50,20, 20, Alignment.VERTICAL));
+        gamePanel.addDrawableObject(new Wall(maze, 30,30, 40, Alignment.HORIZONTAL));
+        gamePanel.addDrawableObject(new Wall(maze, 30,10, 45, Alignment.VERTICAL));
     }
 
     private void checkCollisions() {
@@ -103,4 +105,8 @@ public class Game {
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        update();
+    }
 }

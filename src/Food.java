@@ -2,6 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Food extends GameObject implements DrawableObject {
 
@@ -14,17 +15,7 @@ public class Food extends GameObject implements DrawableObject {
     }
 
     public void eatFood(Point foodEaten) {
-
-        Point foodToRemove = new Point();
-
-        for (Point p : foodList) {
-            if (p.equals(foodEaten)) {
-                foodToRemove = p;
-            }
-        }
-
-        foodList.remove(foodToRemove);
-
+        foodList = foodList.stream().filter(p -> !p.equals(foodEaten)).collect(Collectors.toList());
     }
 
     public void generateNewFood(Maze maze) {
@@ -54,11 +45,7 @@ public class Food extends GameObject implements DrawableObject {
 
     @Override
     public synchronized Point getSinglePosition() {
-        if (!foodList.isEmpty()) {
-            return foodList.get(0);
-        } else {
-            return null;
-        }
+        return foodList.stream().skip(foodList.size()-1).findFirst().orElse(null);
 
     }
 

@@ -7,11 +7,11 @@ public class GamePanel extends JPanel {
 
 
 
-    private List<DrawableObject> drawableObjectList = new ArrayList<>();
+    private final List<DrawableObject> drawableObjectList = new ArrayList<>();
 
     public GamePanel() {
 
-        setBackground(Color.BLACK);
+        setBackground(new Color(56,34,26));
 
     }
 
@@ -23,11 +23,7 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
-        for (DrawableObject d : drawableObjectList) {
-            d.draw(g);
-        }
-
-
+        drawableObjectList.forEach(o -> o.draw(g));
 
     }
 }

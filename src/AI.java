@@ -22,8 +22,7 @@ public class AI extends Thread {
 
         if (directionQueue.size() > 0) {
             return directionQueue.remove(0);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -85,7 +84,6 @@ public class AI extends Thread {
                 }
 
 
-
                 if (rand.nextInt(15) == 1) {
                     if (positionOfFood.x > x) {
                         snake.setDirection(Direction.EAST);
@@ -105,42 +103,15 @@ public class AI extends Thread {
                 }
 
 
-
-                distanceToObstacle = maze.hasObstacleAlongAxis(x, y, snake.getCurrentDirection());
-
-
-                if (distanceToObstacle < distanceToFood) {
-
-                    switch (snake.getCurrentDirection()) {
-
-                        case NORTH, SOUTH -> {
-                            if (rand.nextInt(2) == 1) {
-                                snake.setDirection(Direction.WEST);
-                            } else {
-                                snake.setDirection(Direction.EAST);
-                            }
-                        }
-
-                        case EAST, WEST -> {
-                            if (rand.nextInt(2) == 1) {
-                                snake.setDirection(Direction.NORTH);
-                            } else {
-                                snake.setDirection(Direction.SOUTH);
-                            }
-                        }
-
-                    }
-
-
-                }
-
-
             }
 
-        }
 
+        }
 
     }
 
 
 }
+
+
+

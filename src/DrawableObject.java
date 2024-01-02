@@ -2,6 +2,6 @@ import java.awt.*;
 
 public interface DrawableObject {
 
-    public void draw(Graphics g);
+    void draw(Graphics g);
 
 }
